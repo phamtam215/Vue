@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 3: Watcher</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 500px; margin: auto; }
+        input { width: 100%; padding: 10px; font-size: 1.2em; box-sizing: border-box; }
+        p { background-color: #f0f0f0; padding: 15px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <h1>Tìm kiếm sản phẩm</h1>
+    <input type="text" v-model="searchQuery" placeholder="Gõ tên sản phẩm...">
+    <p><strong>Trạng thái:</strong> {{ searchResult }}</p>
+</div>
+
+<div>
+    Hãy thử nghiệm:<br>Mở file trên và gõ vào ô tìm kiếm. Bạn sẽ thấy:<br>Ngay khi bạn gõ một ký tự, watch được kích hoạt.<br>Dòng "Trạng thái" đổi thành "Đang tìm kiếm...".<br>Sau 1 giây, nó đổi thành "Đã tìm thấy 5 sản phẩm...".<br>Đây chính là mục đích của watch: thực hiện một chuỗi hành động (cập nhật trạng thái, gọi API) để phản ứng lại sự thay đổi của một dữ liệu duy nhất.
+</div>
+
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                searchQuery: '',
+                searchResult: 'Hãy gõ gì đó để bắt đầu tìm kiếm.'
+            }
+        },
+        watch: {
+            // Tên của hàm watcher PHẢI TRÙNG với tên biến data cần theo dõi.
+            // Vue sẽ tự động truyền giá trị mới và giá trị cũ vào hàm.
+            // newValue: Giá trị mới của biến ngay sau khi nó thay đổi.
+            // oldValue: Giá trị cũ của biến ngay trước khi nó thay đổi.
+            // Bạn không cần phải làm gì để lấy các giá trị này, Vue sẽ tự động cung cấp chúng cho bạn. Đây là một tính năng mặc định.
+            searchQuery(newValue, oldValue) {
+                console.log(`Giá trị tìm kiếm đã thay đổi từ "${oldValue}" thành "${newValue}"`);
+
+                // Nếu ô input trống thì không làm gì cả
+                if (newValue.trim() === '') {
+                    this.searchResult = 'Hãy gõ gì đó để bắt đầu tìm kiếm.';
+                    return;
+                }
+                
+                // Bắt đầu thực hiện hành động (side effect)
+                this.searchResult = `Đang tìm kiếm cho "${newValue}"...`;
+
+                // Giả lập việc gọi API mất 1 giây
+                setTimeout(() => {
+                    // Để an toàn, kiểm tra xem người dùng có xóa hết chữ trong lúc đang chờ không
+                    if (this.searchQuery === newValue) {
+                         this.searchResult = `Đã tìm thấy 5 sản phẩm cho "${newValue}"`;
+                    }
+                }, 1000);
+            }
+        }
+    }).mount('#app');
+</script>
+
+</body>
+</html>
+
+<!-- 
+1/ Khái niệm: watch (watcher) là một công cụ cho phép bạn thực hiện một hành động bất cứ khi nào một dữ liệu cụ thể thay đổi.
+Nên dùng: nên dùng watch khi bạn muốn thực hiện các hành động có "tác dụng phụ" (side effects) để đáp lại sự thay đổi của dữ liệu. "Tác dụng phụ" là những hành động không chỉ đơn giản là tính toán ra một giá trị mới.
+Các trường hợp kinh điển:
+
+- Gọi API: Khi người dùng gõ vào ô tìm kiếm (searchQuery), bạn muốn gọi đến server để lấy kết quả tìm kiếm tương ứng.
+- Lưu dữ liệu: Khi người dùng thay đổi một cài đặt, bạn muốn tự động lưu cài đặt đó vào localStorage của trình duyệt.
+- Thực hiện logic phức tạp: Khi một biến thay đổi, bạn cần phải thay đổi một loạt các biến data khác hoặc gọi nhiều method.
+
+
+2/ Việc dùng watch để làm công việc của computed cũng giống như bạn "dùng dao mổ trâu để cắt giấy" vậy - nó làm được, nhưng nó cồng kềnh, kém hiệu quả và không phải là công cụ được thiết kế cho mục đích đó.
+
+
+-->

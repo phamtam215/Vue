@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Dynamic Styling</h1>
+    </header>
+    <section id="styling">
+      <!-- Cách 1: sử dụng inline style -->
+      <!-- <div class="demo" :style="{ 'border-color': boxASelected ? '#4fc08d' : '#ccc' }" @click="boxSelected('A')"></div>
+      <div class="demo" :style="{ 'border-color': boxBSelected ? '#4fc08d' : '#ccc' }" @click="boxSelected('B')"></div>
+      <div class="demo" :style="{ 'border-color': boxCSelected ? '#4fc08d' : '#ccc' }" @click="boxSelected('C')"></div> -->
+
+      <!-- Cách 2: sử dụng class binding
+      Không cần {{ }} vì directive bindings (v-bind, v-on, v-if, v-for...) -->
+      <div class="demo" :class=boxAColorClasses @click="boxSelected('A')"></div>
+      <div class="demo" :class=boxBColorClasses @click="boxSelected('B')"></div>
+      <div class="demo" :class=boxCColorClasses @click="boxSelected('C')"></div>
+    </section>
+  </body>
+</html>

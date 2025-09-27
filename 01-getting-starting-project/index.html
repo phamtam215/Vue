@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A First App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Div này có id="app" - Vue sẽ mount (gắn kết) ứng dụng vào đây -->
+    <div id="app">
+      <div>
+        <label for="goal">Goal</label>
+        <!-- v-model="enteredValue": Two-way data binding - kết nối giá trị input với data enteredValue -->
+        <!-- Khi user gõ vào input, enteredValue sẽ tự động cập nhật và ngược lại -->
+        <input type="text" id="goal" v-model="enteredValue" />
+        
+        <!-- v-on:click="addGoal": Event listener - khi click button sẽ gọi method addGoal -->
+        <!-- Có thể viết tắt thành @click="addGoal" -->
+        <button v-on:click="addGoal">Add Goal</button>
+      </div>
+      
+      <ul>
+        <!-- v-for="goal in goals": Lặp qua mảng goals và render ra các <li> -->
+        <!-- {{goal}}: Interpolation - hiển thị giá trị của biến goal -->
+        <li v-for="goal in goals">{{goal}}</li>
+      </ul>
+    </div>
+    
+    <!-- Load thư viện Vue 3 từ CDN - PHẢI load trước app.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Load code ứng dụng Vue của chúng ta -->
+    <script src="app.js"></script>
+  </body>
+</html>

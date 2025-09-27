@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 3: Computed vs Methods</title>
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        input { padding: 8px; width: 300px; margin-bottom: 10px; }
+        .container { margin-bottom: 30px; border: 1px solid #ccc; padding: 15px; }
+        p { font-size: 1.2em; }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="container">
+        <h2>Thông tin cá nhân</h2>
+        Họ: <input v-model="lastName" /><br>
+        Tên: <input v-model="firstName" />
+    </div>
+
+    <div class="container">
+        <p>
+            ☕ Họ tên từ Method: <strong>{{ getFullNameFromMethod() }}</strong>
+        </p>
+        <p>
+            🛒 Họ tên từ Computed: <strong>{{ fullNameFromComputed }}</strong>
+        </p>
+    </div>
+    
+    <div class="container">
+        <p>Biến đếm này không liên quan gì đến họ và tên.</p>
+        <p>Counter: {{ counter }}</p>
+        <button v-on:click="counter++">Tăng Counter</button>
+    </div>
+
+
+    <ol>
+        <li>Gõ vào ô input: Cả method và computed đều chạy.</li>
+        <li>Bấm nút "Tăng Counter": Chỉ có method chạy lại, còn computed sẽ dùng kết quả đã lưu (cache) vì dữ liệu nó phụ thuộc không hề thay đổi.</li>
+    </ol>
+
+</div>
+
+<script>
+    // Bước 2: Dùng cú pháp Vue.createApp({ ... }).mount('#app')
+    Vue.createApp({
+        // Bước 3: Trong Vue 3, 'data' phải là một hàm (function) trả về một đối tượng
+        data() {
+            return {
+                firstName: 'An',
+                lastName: 'Nguyễn Văn',
+                counter: 0
+            }
+        },
+        
+        // methods và computed vẫn được định nghĩa như cũ
+        methods: {
+            getFullNameFromMethod: function() {
+                console.log('☕ Method (Vue 3) được gọi!');
+                return this.lastName + ' ' + this.firstName;
+            }
+        },
+
+        computed: {
+            fullNameFromComputed: function() {
+                console.log('🛒 Computed (Vue 3) được tính toán lại!');
+                return this.lastName + ' ' + this.firstName;
+            }
+        }
+    }).mount('#app');
+</script>
+
+</body>
+</html>
+
+<!-- 
+1. Computed vs Method
+
+Computed được dùng để tính toán ra một dữ liệu mới dựa trên các dữ liệu có sẵn. Hãy coi nó như một "biến" thông minh, tự động cập nhật.
+- nên dùng computed khi bạn cần hiển thị một thông tin mà nó là kết quả của việc xử lý, tính toán, hoặc kết hợp từ một hoặc nhiều biến data khác.
+
+Ví dụ kinh điển:
+- Kết hợp dữ liệu: Bạn có firstName và lastName, bạn cần hiển thị fullName.
+- Xử lý danh sách: Bạn có một danh sách sản phẩm (products), bạn cần hiển thị danh sách các sản phẩm đang giảm giá (saleProducts).
+- Định dạng dữ liệu: Bạn có một con số price, bạn cần hiển thị nó dưới dạng tiền tệ có dấu phẩy và ký hiệu đ (formattedPrice).
+- Logic điều kiện: Dựa vào tuổi của người dùng (age), bạn cần hiển thị isAdult (true/false).
+
+Nói ngắn gọn: Bất cứ khi nào bạn thấy mình muốn viết logic xử lý phức tạp bên trong template {{ ... }}, hãy đưa nó vào computed.
+
+Hãy dùng computed để hiển thị dữ liệu đã qua tính toán và dùng methods để xử lý các hành động của người dùng. Chúng bổ trợ cho nhau chứ không thay thế nhau.
+/*
+ SO SÁNH: COMPUTED vs METHODS
+ --------------------------------------------------------------------
+/*
++--------------------------------------------------------------------------+
+|                        SO SÁNH: COMPUTED vs METHODS                      |
++--------------------------------------------------------------------------+
+| TIÊU CHÍ        | COMPUTED (Danh từ 🧠)              | METHODS (Động từ 💪)           |
++-----------------|------------------------------------|--------------------------------+
+| MỤC ĐÍCH        | Tính toán & mô tả dữ liệu          | Thực hiện hành động            |
+| CÂU HỎI TRẢ LỜI | "Giá trị này là gì?"               | "Cần phải làm gì?"             |
+| KHI NÀO CHẠY    | Tự động khi data thay đổi (cache)  | Chỉ khi được gọi (v-on)        |
+| THAM SỐ         | Không nhận từ template             | Có thể nhận                    |
+| VÍ DỤ           | fullName, totalPrice               | login(), addToCart(product)    |
++--------------------------------------------------------------------------+
+*/
+
+*/
+
+2. Tổng kết lại cho đúng
+Đây là luồng suy nghĩ chính xác:
+- Bạn gọi method trong template (dùng ()).
+- Bạn truy cập computed trong template (không dùng (), giống như một biến).
+Khi giao diện render lại:
+- Vue thấy lệnh gọi method -> Nó không cần suy nghĩ, nó thực thi lại hàm đó ngay lập tức.
+- Vue thấy yêu cầu truy cập computed -> Nó sẽ kiểm tra:
+  - Các "nguyên liệu" tạo nên computed có thay đổi không?
+  - Nếu không đổi -> Vue không thực thi hàm tính toán, mà trả về kết quả cũ đã lưu (cache).
+  - Nếu có đổi -> Vue mới thực thi hàm để tính toán ra giá trị mới. 
+
+3. Giao diện render lại
+Vue tạo ra một "khu vực quản lý" riêng. Mọi hoạt động cập nhật, thay đổi giao diện do dữ liệu thay đổi sẽ chỉ diễn ra trong khu vực đó. Bất kỳ thứ gì nằm ngoài thẻ <div id="app"> sẽ không bị Vue tác động đến.
+
+4, Mục đích tồn tại duy nhất của một computed property là để tính toán và trả về một giá trị mới dựa trên dữ liệu có sẵn.
+
+5. Computed phải chạy đồng bộ (Synchronous): Khi Vue cần hiển thị giao diện, nó hỏi computed: "Giá trị của mày là gì?". Nó cần câu trả lời ngay lập tức để "vẽ" lên màn hình. Một lời gọi API thì lại là bất đồng bộ (asynchronous), nghĩa là nó cần thời gian để "chờ" server phản hồi. Computed không thể chờ đợi.
+- Gây ra "tác dụng phụ" (Side Effects): Computed được thiết kế để không gây ra "tác dụng phụ". Nó chỉ nên nhận dữ liệu đầu vào và trả ra kết quả. Việc gọi API là một tác dụng phụ lớn. Đây là công việc của watch.
+- Bị gọi lại không kiểm soát: Vì computed được cache và tự động chạy lại khi "nguyên liệu" thay đổi, bạn có thể vô tình gọi API hàng chục lần mà không hề hay biết, gây lãng phí tài nguyên và làm chậm ứng dụng.
+Phép so sánh dễ hiểu:
+Computed giống như một công thức trong ô Excel. Bạn không thể viết một công thức kiểu như: =HÃY_GỌI_ĐIỆN_HỎI_BẠN_TÔI(A1). Bảng tính không biết phải làm gì trong lúc "chờ" bạn của bạn trả lời điện thoại. Nó cần một giá trị cụ thể ngay lập tức.
+-->

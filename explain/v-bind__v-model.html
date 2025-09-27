@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>v-bind và v-model</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        input { margin-bottom: 5px; padding: 8px; width: 300px; }
+        p { background-color: #f0f0f0; padding: 10px; }
+        .container { margin-bottom: 30px; border: 1px solid #ccc; padding: 15px; }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    
+    <div class="container">
+        <h2>📢 v-bind: Giao tiếp 1 chiều</h2>
+        <!-- Để giá trị ở đây được cập nhật thì bạn phải thêm v-on:input vào h2 ⬆️ để có thể lắng nghe action enter chẳng hạn, sau đó gọi method để update data cho messageOneWay -->
+        <p>Giá trị ban đầu của messageOneWay là: <strong>{{ messageOneWay }}</strong></p>
+        
+        <input 
+            type="text" 
+            v-bind:value="messageOneWay" 
+            placeholder="Gõ vào đây sẽ không cập nhật dữ liệu Vue"> 
+
+            
+    </div>
+
+
+    <div class="container">
+        <h2>🔁 v-model: Giao tiếp 2 chiều</h2>
+        <p>Giá trị ban đầu của messageTwoWay là: <strong>{{ messageTwoWay }}</strong></p>
+        
+        <input 
+            type="text" 
+            v-model="messageTwoWay"
+            placeholder="Gõ vào đây sẽ cập nhật dữ liệu Vue ngay lập tức">
+    </div>
+
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            messageOneWay: 'Đây là dữ liệu 1 chiều',
+            messageTwoWay: 'Đây là dữ liệu 2 chiều'
+        }
+    });
+</script>
+
+</body>
+</html>
+
+<!-- 
+1. v-bind chỉ làm nhiệm vụ "đổ" dữ liệu ra ô input (chiều đi). Để "thu" dữ liệu vào khi người dùng tương tác, bạn phải dùng v-on để lắng nghe sự kiện.
+- v-bind + v-on cho bạn sự linh hoạt tối đa. Bạn có thể cập nhật dữ liệu khi người dùng nhấn Enter (v-on:keyup.enter), khi họ bấm ra ngoài ô input (v-on:change), hoặc bất kỳ sự kiện nào khác bạn muốn.
+
+2 chiều của v-model cho đúng:
+- v-model là cách viết tắt cho trường hợp phổ biến nhất: cập nhật dữ liệu ngay khi gõ (v-bind:value + v-on:input).
+- Chiều 1 (Dữ liệu → Giao diện): Khi biến messageTwoWay trong Vue bị thay đổi (ví dụ bởi một hàm nào đó), ô input sẽ tự động hiển thị giá trị mới đó.
+- Chiều 2 (Giao diện → Dữ liệu): Khi bạn gõ chữ vào ô input, biến messageTwoWay trong Vue sẽ được cập nhật theo ngay lập tức.
+-->

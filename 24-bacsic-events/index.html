@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vue Basics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <h1>Vue Events</h1>
+  </header>
+  <section id="events">
+    <h2>Events in Action</h2>
+    <!-- 1/ v-on used for event handling, v-bind used for binding attributes -->
+    <!-- <button v-on:click="counter++">Add</button> -->
+    <!-- <button v-on:click="counter--">Subtract</button> -->
+
+    <!-- ---------------- -->
+    <!-- 2/ do not add logic to html code like ⬆️ use function instead-->
+    <!-- use "add" or "add()" both are accepted  -->
+    <!-- <button v-on:click="add">Add</button> 
+          <button v-on:click="subtract">Subtract</button> -->
+    <button v-on:click="add(5)">Add 5</button>
+
+    <!-- ---------------- -->
+    <!-- 3/ right click to subtract 10, .right is event modifier -->
+    <button v-on:click.right="subtract(10)">Subtract 10</button>
+    <p>Result: {{ counter }}</p>
+
+    <!-- ---------------- -->
+    <!-- 4/ v-on:keyup.enter="submitName": press enter and release to alert the name -->
+    <!-- <input type="text" v-on:input="setName" v-on:keyup.enter="submitName"> -->
+
+    <!-- ---------------- -->
+    <!-- 5/ v-bind:value="name" map input "name" with <input> -->
+    <!-- <input type="text" v-on:input="setName" v-bind:value="name"> -->
+
+    <!-- ---------------- -->
+    <!-- 6/ v-model = v-bind:value + v-on:input -->
+    <input type="text" v-model="name">
+    <button v-on:click="resetInput"> Reset Input </button>
+
+    <p> Your Name: {{name}}</p>
+
+    <!-- <input type="text" v-on:input="setName2($event, 'Pham')"> -->
+    <!-- <p> Your Name: {{name2}}</p> -->
+
+    <!-- prevent default form submission, the page will not reload -->
+    <!-- <form v-on:submit.prevent="submitForm">
+      <input type="text">
+      <button>Sign Up</button>
+    </form> -->
+
+    <!-- không call fullName () vì là computed -->
+    <p> Full Name: {{ fullName }} </p>
+
+  </section>
+</body>
+
+</html>
