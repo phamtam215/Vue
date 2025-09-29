@@ -1,0 +1,30 @@
+<!-- 
+- v-for là chỉ thị trong Vue dùng để vẽ một danh sách các phần tử dựa trên một mảng (array) hoặc đối tượng (object).
+- :key là một thuộc tính bắt buộc phải đi kèm với v-for, dùng để cung cấp một "danh tính" duy nhất cho mỗi phần tử trong danh sách, giúp Vue cập nhật giao diện một cách hiệu quả nhất. 
+-->
+
+<ul>
+  <li v-for="user in users" :key="user.id">
+    {{ user.name }}
+  </li>
+</ul>
+
+
+<!-- 
+:key: Thẻ Căn Cước Công Dân 🆔
+Bản chất: Khi danh sách của bạn thay đổi (thêm, xóa, sắp xếp lại), Vue cần biết chính xác phần tử nào đã thay đổi để chỉ cập nhật đúng phần tử đó thay vì vẽ lại cả danh sách. :key chính là "số căn cước" để Vue nhận dạng.
+-->
+
+<!--
+Khi nào dùng?
+1. v-for: Bất cứ khi nào bạn muốn hiển thị một danh sách các mục có cấu trúc lặp lại. Ví dụ: danh sách sản phẩm, danh sách bài viết, danh sách bình luận, các hàng trong bảng...
+2. :key: Luôn luôn phải sử dụng khi bạn dùng v-for. Đây là yêu cầu bắt buộc để đảm bảo hiệu năng và tránh các lỗi hiển thị không mong muốn.
+
+Những điều cần lưu ý khi dùng 📝
+1. :key phải là duy nhất: Giá trị của :key trong cùng một danh sách phải là duy nhất. Thông thường, bạn nên dùng ID của dữ liệu (ví dụ: product.id, user.id).
+2. Không dùng index làm :key: Tránh dùng vị trí của phần tử trong mảng (index) làm :key, đặc biệt là khi danh sách có thể thay đổi thứ tự hoặc bị xóa bớt phần tử. Dùng index có thể gây ra lỗi hiển thị và làm giảm hiệu năng.
+3. :key là viết tắt: :key là cách viết tắt của v-bind:key.
+4. v-for có thể lặp qua đối tượng: Bạn cũng có thể dùng v-for để lặp qua các thuộc tính của một đối tượng:
+
+Chốt lại: v-for dùng để vẽ danh sách, và :key là "thẻ căn cước" bắt buộc phải có để Vue quản lý danh sách đó một cách hiệu quả. Luôn luôn dùng một giá trị duy nhất và ổn định (như ID) cho :key.
+-->

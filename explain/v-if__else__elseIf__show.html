@@ -1,0 +1,46 @@
+<!-- Bản chất: v-if sẽ thực sự thêm hoặc xóa phần tử ra khỏi cây DOM. Nếu điều kiện là false, phần tử đó sẽ không tồn tại trong HTML. -->
+
+<div v-if="type === 'A'">
+  Khối A
+</div>
+<div v-else-if="type === 'B'">
+  Khối B
+</div>
+<div v-else>
+  Các khối còn lại
+</div>
+
+<!-- Bản chất: v-show luôn giữ phần tử trong cây DOM. Nó chỉ đơn giản là thay đổi thuộc tính display: none của CSS để ẩn hoặc hiện phần tử đó. -->
+
+<h1 v-show="ok">Xin chào!</h1>
+
+<!-- 
+Những điều cần lưu ý 📝
+- v-if có "chi phí" cao hơn khi chuyển đổi: Mỗi lần bật/tắt, Vue phải thực hiện quá trình thêm/xóa component, bao gồm cả việc chạy các lifecycle hooks (created, mounted, destroyed...).
+- v-show có "chi phí" cao hơn khi render ban đầu: Phần tử luôn được render, dù có được hiển thị hay không.
+- Thứ tự quan trọng: v-else và v-else-if phải được đặt ngay sau một v-if hoặc v-else-if tương ứng, nếu không chúng sẽ không hoạt động.
+- Không dùng chung trên một phần tử: Bạn không thể đặt v-if và v-for trên cùng một phần tử, vì v-for có độ ưu tiên cao hơn. Nếu cần, hãy bọc v-for trong một thẻ <template> có v-if.
+
+  Chốt lại:
+- Dùng v-if khi bạn muốn có logic điều kiện thực sự và không cần bật/tắt thường xuyên.
+- Dùng v-show khi bạn muốn bật/tắt một thứ gì đó một cách nhanh chóng và liên tục
+-->
+
+<!-- 
+
+ SO SÁNH: v-if vs v-show
+ ----------------------------------------------------
+
+ === v-if / v-else-if / v-else (Người gác cổng 👮‍♂️) ===
+ - BẢN CHẤT: Thêm hoặc XÓA phần tử khỏi cây DOM.
+ - KHI DÙNG:
+   + Nội dung ít khi thay đổi trạng thái (ví dụ: phân quyền người dùng).
+   + Cần logic rẽ nhánh phức tạp với else-if / else.
+ - LƯU Ý: Chi phí "chuyển đổi" (bật/tắt) cao hơn vì phải tạo/hủy component.
+
+ === v-show (Người ảo thuật 🧙‍♀️) ===
+ - BẢN CHẤT: Luôn giữ phần tử trong DOM, chỉ thay đổi CSS `display: none`.
+ - KHI DÙNG:
+   + Cần bật/tắt hiển thị một cách thường xuyên và nhanh chóng (ví dụ: tabs, modal).
+ - LƯU Ý: Chi phí "render ban đầu" cao hơn vì phần tử luôn được tạo ra ngay cả khi bị ẩn.
+-->
