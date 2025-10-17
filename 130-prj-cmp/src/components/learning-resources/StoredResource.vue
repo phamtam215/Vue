@@ -16,7 +16,8 @@ export default {
   components: {
     LearningResource,
   },
-  props: ['storedResources'],
+  // Inject storedResources from parent component
+  inject: ['storedResources'],
 };
 </script>
 
