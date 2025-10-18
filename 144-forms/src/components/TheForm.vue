@@ -121,6 +121,14 @@
         Please select a learning style
       </p>
     </div>
+    <div class="form-control">
+      <h2>Rate your experience with Vue.js</h2>
+      <rating-control
+        v-model="vueRating"
+        @update:modelValue="logData('vueRating', $event)"
+      />
+      <p v-if="!isValidRating" class="error-message">Please provide a rating</p>
+    </div>
     <div>
       <button :disabled="!isFormValid">Save Data</button>
       <p v-if="!isFormValid" class="validation-summary">
@@ -131,7 +139,12 @@
 </template>
 
 <script>
+import RatingControl from './RatingControl.vue';
+
 export default {
+  components: {
+    RatingControl,
+  },
   data() {
     return {
       userName: '',
@@ -139,6 +152,7 @@ export default {
       referrer: 'google',
       interests: [],
       learningStyle: '',
+      vueRating: 0,
     };
   },
   computed: {
@@ -155,12 +169,16 @@ export default {
     isValidLearningStyle() {
       return this.learningStyle !== '';
     },
+    isValidRating() {
+      return this.vueRating > 0;
+    },
     isFormValid() {
       return (
         this.isValidName &&
         this.isValidAge &&
         this.isValidInterests &&
-        this.isValidLearningStyle
+        this.isValidLearningStyle &&
+        this.isValidRating
       );
     },
   },
@@ -171,6 +189,7 @@ export default {
       console.log('Age valid:', this.isValidAge);
       console.log('Interests valid:', this.isValidInterests);
       console.log('Learning style valid:', this.isValidLearningStyle);
+      console.log('Rating valid:', this.isValidRating);
       console.log('Form valid:', this.isFormValid);
 
       if (!this.isFormValid) {
@@ -185,6 +204,7 @@ export default {
       console.log('Referrer:', this.referrer);
       console.log('Interests:', this.interests);
       console.log('Learning Style:', this.learningStyle);
+      console.log('Vue Rating:', this.vueRating);
       console.log('=== END FORM DATA ===');
 
       // Reset form to default values
@@ -200,6 +220,7 @@ export default {
       this.referrer = 'google';
       this.interests = [];
       this.learningStyle = '';
+      this.vueRating = 0;
       console.log('✅ Form reset complete!');
     },
     validateName() {
