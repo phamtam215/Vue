@@ -6,6 +6,7 @@
       :title="resource.name"
       :description="resource.description"
       :link="resource.link"
+      :id="resource.id"
     ></learning-resource>
   </ul>
 </template>

@@ -1,25 +1,27 @@
 <template>
-  <!-- phần Backdrop (mờ)) - click sẽ phát ra sự kiện "close" để đóng dialog -->
-  <div @click="$emit('close')"></div>
-  <!-- Dialog container -->
+  <teleport to="body">
+    <!-- phần Backdrop (mờ)) - click sẽ phát ra sự kiện "close" để đóng dialog -->
+    <div @click="$emit('close')"></div>
+    <!-- Dialog container -->
 
-  <dialog open @click.stop>
-    <header>
-      <slot name="header">
-        <h2>{{ title }}</h2>
-      </slot>
-    </header>
-    <section>
-      <!-- Nội dung chính -->
-      <slot></slot>
-    </section>
-    <menu>
-      <!-- Buttons từ parent -->
-      <slot name="actions">
-        <base-button @click="$emit('close')">Close</base-button>
-      </slot>
-    </menu>
-  </dialog>
+    <dialog open @click.stop>
+      <header>
+        <slot name="header">
+          <h2>{{ title }}</h2>
+        </slot>
+      </header>
+      <section>
+        <!-- Nội dung chính -->
+        <slot></slot>
+      </section>
+      <menu>
+        <!-- Buttons từ parent -->
+        <slot name="actions">
+          <base-button @click="$emit('close')">Close</base-button>
+        </slot>
+      </menu>
+    </dialog>
+  </teleport>
 </template>
 
 <script>

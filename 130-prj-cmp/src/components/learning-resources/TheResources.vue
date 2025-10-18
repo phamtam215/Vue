@@ -55,6 +55,15 @@ export default {
       this.storedResources.unshift(newResource);
       this.selectedTab = 'stored-resource';
     },
+    removeResource(id) {
+      const index = this.storedResources.findIndex(
+        (resource) => resource.id === id
+      );
+
+      if (index !== -1) {
+        this.storedResources.splice(index, 1); // ✅ Mutate existing array
+      }
+    },
   },
   // Provide storedResources to all child components
   provide() {
@@ -62,6 +71,7 @@ export default {
       storedResources: this.storedResources,
       // Provide the addResource method to child components
       addResource: this.addResource,
+      removeResource: this.removeResource,
     };
   },
   computed: {
