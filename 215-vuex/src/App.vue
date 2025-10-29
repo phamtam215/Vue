@@ -1,7 +1,8 @@
 <template>
   <base-container title="Vuex">
     <the-counter />
-    <change-counter />
+    <change-counter :numberIncrement="10" />
+    <change-counter :numberIncrement="5" />
   </base-container>
 </template>
 
