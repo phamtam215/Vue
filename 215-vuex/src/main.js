@@ -9,6 +9,11 @@ const store = createStore({
       counter: 0, // Biến state tập trung, dùng chung cho toàn app
     };
   },
+  mutations: {
+    increment(state) {
+      state.counter++;
+    },
+  },
 });
 
 const app = createApp(App);
