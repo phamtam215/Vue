@@ -7,11 +7,15 @@ const store = createStore({
   state() {
     return {
       counter: 0, // Biến state tập trung, dùng chung cho toàn app
+      isLoggedIn: false,
     };
   },
   mutations: {
     increment(state, payload) {
       state.counter += payload.value;
+    },
+    setAuth(state, payload) {
+      state.isLoggedIn = payload.isAuth;
     },
   },
 
@@ -20,6 +24,12 @@ const store = createStore({
       setTimeout(() => {
         context.commit('increment', payload);
       }, 2000);
+    },
+    login(context) {
+      context.commit('setAuth', { isAuth: true });
+    },
+    logout(context) {
+      context.commit('setAuth', { isAuth: false });
     },
   },
 
@@ -36,6 +46,9 @@ const store = createStore({
         return 100;
       }
       return finalCounter;
+    },
+    userIsAuthenticated(state) {
+      return state.isLoggedIn;
     },
   },
 });
