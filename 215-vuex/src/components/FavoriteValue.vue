@@ -1,5 +1,5 @@
 <template>
-  <h3>Counter: {{ counter }}</h3>
+  <h3>Counter Favorite: {{ counter }}</h3>
   <p>Do</p>
 </template>
 
