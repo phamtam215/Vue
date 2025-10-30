@@ -21,7 +21,7 @@ export default {
 
     // },
 
-    ...mapActions(['incrementAsync']), // Ánh xạ action incrementAsync từ Vuex store vào component
+    ...mapActions(['incrementAsync']), // Module global, không cần prefix
   },
 };
 </script>

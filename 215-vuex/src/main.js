@@ -3,36 +3,27 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import { createStore } from 'vuex';
 
-const store = createStore({
+const numbersModule = {
   state() {
     return {
       counter: 0, // Biến state tập trung, dùng chung cho toàn app
-      isLoggedIn: false,
     };
   },
   mutations: {
     increment(state, payload) {
       state.counter += payload.value;
     },
-    setAuth(state, payload) {
-      state.isLoggedIn = payload.isAuth;
+    setFavoriteNumber(state, payload) {
+      state.favoriteNumber = payload.value;
     },
   },
-
   actions: {
     incrementAsync(context, payload) {
       setTimeout(() => {
         context.commit('increment', payload);
       }, 2000);
     },
-    login(context) {
-      context.commit('setAuth', { isAuth: true });
-    },
-    logout(context) {
-      context.commit('setAuth', { isAuth: false });
-    },
   },
-
   getters: {
     finalCounter(state) {
       return state.counter;
@@ -47,6 +38,33 @@ const store = createStore({
       }
       return finalCounter;
     },
+  },
+};
+
+const store = createStore({
+  modules: {
+    numbers: numbersModule,
+  },
+
+  state() {
+    return {
+      isLoggedIn: false,
+    };
+  },
+  mutations: {
+    setAuth(state, payload) {
+      state.isLoggedIn = payload.isAuth;
+    },
+  },
+  actions: {
+    login(context) {
+      context.commit('setAuth', { isAuth: true });
+    },
+    logout(context) {
+      context.commit('setAuth', { isAuth: false });
+    },
+  },
+  getters: {
     userIsAuthenticated(state) {
       return state.isLoggedIn;
     },

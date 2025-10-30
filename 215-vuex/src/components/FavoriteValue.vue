@@ -7,7 +7,7 @@
 export default {
   computed: {
     counter() {
-      return this.$store.getters.normalizedCounter; // Đọc giá trị counter từ Vuex store
+      return this.$store.getters.normalizedCounter; // Module global, getter truy cập trực tiếp
     },
   },
 };
