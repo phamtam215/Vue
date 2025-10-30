@@ -21,7 +21,7 @@ export default {
 
     // },
 
-    ...mapActions(['incrementAsync']), // Module global, không cần prefix
+    ...mapActions('numbers', ['incrementAsync']), // Local module - cần chỉ định module name
   },
 };
 </script>

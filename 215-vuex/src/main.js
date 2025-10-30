@@ -4,6 +4,7 @@ import App from './App.vue';
 import { createStore } from 'vuex';
 
 const numbersModule = {
+  namespaced: true, // Local module - getters/actions/mutations cần prefix 'numbers/'
   state() {
     return {
       counter: 0, // Biến state tập trung, dùng chung cho toàn app

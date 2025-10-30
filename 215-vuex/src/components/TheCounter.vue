@@ -11,7 +11,7 @@ export default {
     //   return this.$store.getters.finalCounter; // Đọc giá trị counter từ Vuex store
     // },
 
-    ...mapGetters(['finalCounter']), // Module global, không cần prefix
+    ...mapGetters('numbers', ['finalCounter']), // Local module - cần chỉ định module name
   },
 };
 </script>

@@ -7,7 +7,7 @@
 export default {
   computed: {
     counter() {
-      return this.$store.getters.normalizedCounter; // Module global, getter truy cập trực tiếp
+      return this.$store.getters['numbers/normalizedCounter']; // Local module - cần prefix 'numbers/'
     },
   },
 };
