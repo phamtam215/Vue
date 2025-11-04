@@ -1,10 +1,9 @@
-<template> 
-<section>
-    FILTER
-</section>
-
-<section>
-  LIST OF COACHES
+<template>
+  <section>FILTER2</section>
+  <section>
+    <div class="control">
+      <button>Refresh</button>
+      <router-link to="/register">Register as Coach</router-link>
+    </div>
   </section>
-
-</template>  
+</template>
