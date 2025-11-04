@@ -4,13 +4,20 @@
     <p>Hourly Rate: ${{ hourlyRate }}/hour</p>
     <div>
       <!-- key="area" vì mỗi area là duy nhất -->
-      <span v-for="area in areas" :key="area">{{ area }}</span>
+      <base-badge
+        v-for="area in areas"
+        :key="area"
+        :title="area"
+        :type="area"
+      ></base-badge>
     </div>
 
     <div class="action">
       <!-- nhằm mục đích: tạo liên kết đến trang liên hệ và chi tiết của huấn luyện viên thông qua props -->
-      <router-link :to="coachContactLink">Contact</router-link>
-      <router-link :to="coachDetailLink">View Detail</router-link>
+      <base-button mode="outline" link :to="coachContactLink"
+        >Contact</base-button
+      >
+      <base-button link :to="coachDetailLink">View Detail</base-button>
     </div>
   </li>
 </template>
